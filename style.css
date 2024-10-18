@@ -145,6 +145,7 @@ main {
 }
 
 .tit-servicios{
+    color: rgb(201, 201, 201);
     font-size: 70px;
     display: flex;
     justify-content: center;
@@ -152,7 +153,7 @@ main {
 }
 
 .colum-tit{
-    background-color:rgb(105, 105, 105);
+    background-color:rgb(26, 25, 25);
 }
 
 .columnas-tit{
@@ -163,6 +164,7 @@ main {
 }
 
 .columnas-a{
+    color: rgb(211, 210, 210);
     flex: 1; 
     margin: 0 10px; 
     padding: 15px;
@@ -170,6 +172,7 @@ main {
 }
 
 .columnas-a p{
+    color: rgb(214, 214, 214);
     border-right: 100cm;
     font-size: 20px;
     padding-bottom: 50px;

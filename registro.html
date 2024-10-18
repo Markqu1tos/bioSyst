@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="reconocimiento/face-api.min.js" defer></script>
+    <script src="reconocimiento/webcam.js" defer></script>
+    <link rel="stylesheet" href="reconocimiento/camara.css">
     <title>Registro</title>
 </head>
 <body>
@@ -22,7 +25,8 @@
     </header>
     <!--Algo tengo que agregar-->
     <main>
-
+        <video id="video" autoplay muted width="640" height="480"></video>
+        <canvas id="overlay"></canvas>
     </main>
 
     <footer id="footer">
