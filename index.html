@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>BioSyst</title>
+</head>
+
+<body>
+    <header>
+        <div id="Titulo">
+
+            <h1><a href="index.html">BioSyst</a></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="bioSyst.html">Acerca de BioSyst</a></li>
+                <li><a href="#tit">Servicios</a></li>
+                <li><a href="#footer">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!--corregir slider para que se mueva-->
+<!--Cambiar imagenes del slider, quedo re raro-->
+    <div class="slider-arriba">
+        <div class="slide">
+            <img src="img/carrusel 2.jpg" alt="Imagen 1">
+        </div>
+        <div class="slide">
+            <img src="img/carrusel 1.jpg" alt="Imagen 2">
+        </div>
+        <!--
+        <div class="slide">
+            <img src="img/carrusel 4.jpg" alt="Imagen 3">
+        </div>
+        -->
+        <div class="mover-slider">
+            <button class="antes" onclick="moveSlide(-1)">❮</button>
+            <button class="despues" onclick="moveSlide(1)">❯</button>
+        </div>
+    </div>
+
+    <main>
+        <section id="tit">
+            <h1>Seguridad Biométrica de Calidad</h1>
+            <p>En BioSyst, ofrecemos soluciones avanzadas en seguridad biométrica.</p>
+        </section>
+        <section class="colum-tit">
+            <h1  class="tit-servicios">Servicios</h1>
+            <div class="columnas-tit">
+                <div class="columnas-a">
+                    <h1 class="tit-colu-bio">Biometria Facial</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos, architecto temporibus dignissimos sapiente voluptate commodi quaerat cum. Laboriosam eligendi magnam amet quos necessitatibus voluptatem tenetur inventore. Alias nesciunt deleniti ratione!</p>
+                </div>
+                <div class="columnas-a">
+                    <h1 class="tit-colu-bio">Biometria dactilar</h1>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum perspiciatis architecto porro alias totam culpa. Ex consectetur dolor quaerat, nam culpa facilis, sunt incidunt suscipit repudiandae, numquam animi minus. Voluptatibus?</p>
+                </div>
+                <div class="columnas-a">
+                    <h1 class="tit-colu-bio">Biometria por voz</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur illum porro adipisci eius fuga magni a, eaque facere. Magnam beatae suscipit, eaque neque numquam ipsum iusto cupiditate non rerum quidem.</p>
+                </div>
+            </div>
+        </section> 
+        <!--Arreglar el login, css y html, esteticamente se ve horrible-->
+        <section id="login">
+            <h1 class="log-tit">Regístrese ahora para obtener más información sobre nuestro software</h1>
+            <div class="tit-log">
+                <p class="reg"><a href="registro.html">Registrarte</a></p>
+                <p class="log"><a href="iniciosesion.html">Inicia Sesion</a></p>
+            </div>        
+        </section>
+        <!--
+        <section class="que-bio">
+            <h1 class="tit-bio">Que es un sistema biometrico?</h1>
+            <img src="img/Que-es-el-Reconocimiento-Facial.jpg" alt="img-iz">
+        </section>
+        -->
+             </main>
+             <!--Aumentar tamaño de letras en css, quedo re chico-->
+             <footer id="footer">
+             <div class="columnas-footer">
+            <div class="contac">
+                <h3><u>Contacto</u></h3>
+                <p>info@biosyst.com</p>
+                <p>+54 11 999-999</p>
+            </div>
+            <div class="contac">
+                <h3><u>Redes Sociales</u></h3>
+                <p><a href="#">Instagram</a></p>
+                <p><a href="#">Twitter</a></p>
+                <p><a href="#">LinkedIn</a></p>
+            </div>
+            <div class="contac">
+                <h3>¿Queres trabajar con nosotros?</h3>
+                <p>Envía tu CV a nuestro correo:</p>
+                <p><a href="#">LinkedIn</a></p>
+            </div>
+        </div>
+        <div class="derechos">
+            <p>© 2024 BioSyst.</p>
+        </div>
+    </footer>
+
+    <!--Arreglar el slider porque quedo re tilin, principalmente que no se mueve solo, me falto agregar el moveslide-->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+        }
+
+        function moveSlide(direction) {
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>

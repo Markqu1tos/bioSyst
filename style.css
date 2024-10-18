@@ -1,0 +1,289 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: whitesmoke;
+    flex-direction: column;
+    display: flex;
+    min-height: 100vh;
+}
+
+header {
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: rgba(35, 34, 39);
+    display: flex;
+    align-items: center;
+
+}
+
+#Titulo {
+    color: aliceblue;
+}
+
+#Titulo a {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.logo img {
+    height: 100px;
+    width: 100px;
+}
+/*modificar el nav, quedo re choto*/
+nav {
+    display: flex;
+    margin-left: auto;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav a {
+    color: aliceblue;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/*cambiar el color del hover por 183, 0, 255 que es el mismo del del otro hover del footer*/
+nav a:hover {
+    color: rgb(236, 209, 252);
+}
+
+#tit { 
+    padding: 0%;
+    margin: 0%; 
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#tit h1{
+    margin-bottom: 60px;
+    font-size: 80px;
+    margin-top: 40px;
+}
+/*como chota acomodo esto lpm*/
+#tit p{
+    font-size:30px;
+    margin-bottom: 100px;    
+    align-items: center;
+    flex-direction: column;
+}
+
+#login {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+/*corregir slider para que se mueva*/
+.slider-arriba {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.slide.active {
+    display: block; 
+}
+.slide {
+    width: 100%;
+    display: none;
+    transition: transform 0.5s ease;
+}
+
+.slide img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+
+.mover-slider {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+button {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    opacity: 0.3;
+}
+
+button:hover {
+    opacity: 1;
+}
+
+main {
+    height: 100vh;
+    flex: 1;    
+}
+
+.tit-servicios{
+    font-size: 70px;
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+}
+
+.colum-tit{
+    background-color:rgb(105, 105, 105);
+}
+
+.columnas-tit{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    flex-wrap: nowrap;
+}
+
+.columnas-a{
+    flex: 1; 
+    margin: 0 10px; 
+    padding: 15px;
+    max-width: 300px;
+}
+
+.columnas-a p{
+    border-right: 100cm;
+    font-size: 20px;
+    padding-bottom: 50px;
+}
+
+.tit-colu-bio{
+        
+        font-size: 40px;
+        margin-top: 0;
+        margin-bottom: 20px;
+}
+
+.log-tit{
+    padding-top: 100px;
+    font-size: 50px;
+    padding-bottom: 70px;
+}
+
+.tit-log{
+
+    font-size: 40px;
+    justify-content: space-around;
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    margin-bottom: 90px;
+}
+
+.tit-log a{
+    text-decoration: none;
+    color: black;
+}
+
+.tit-log a:hover{
+    color: rgb(140, 0, 255);   
+}
+
+.reg{
+
+    padding-right: 90px;
+}
+
+.log{
+    padding-left: 50px;
+}
+
+/*
+.que-bio{
+    background-color: rgb(143, 141, 141);
+    display: flex;
+}
+
+.tit-bio{
+    font-size: 40px;
+    display: flex;
+
+    padding-top: 30px;
+    padding-bottom: 20px ;
+}
+
+.que-bio img{
+    padding-top: 60px;
+    width: 600px;
+    height: 400px;
+    padding-bottom: 40px;
+}
+
+*/
+
+footer {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 10px;
+    background-color: rgb(35, 34, 39);
+}
+
+.columnas-footer {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.contac {
+    color: white;
+    flex: 1;
+    padding: 0 10px;
+
+}
+
+.contac a{
+    text-decoration: none;
+    color: white;
+}
+
+.contac a:hover{
+    color: rgb(183, 0, 255);
+}
+
+.contac h3 {
+    margin-bottom: 10px;
+}
+
+.derechos {
+    color: white;
+    text-align: center;
+    padding-top: 50px;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+}
