@@ -15,12 +15,13 @@ navigator.getMedia =
 
 // Cargar modelos de face-api.js
 Promise.all([
-     faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-     faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-     faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
-     faceapi.nets.faceExpressionNet.loadFromUri('/models'),
-     faceapi.nets.ageGenderNet.loadFromUri('/models'),
-     faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
+     faceapi.nets.tinyFaceDetector.loadFromUri('reconocimiento/models/tiny_face_detector_model-weights_manifest.json'),
+     faceapi.nets.faceLandmark68Net.loadFromUri('reconocimiento/models/face_landmark_68_model-weights_manifest.json'),
+     faceapi.nets.faceRecognitionNet.loadFromUri('reconocimiento/models/face_recognition_model-weights_manifest.json'),
+     faceapi.nets.faceExpressionNet.loadFromUri('reconocimiento/models/face_expression_model-weights_manifest.json'),
+     faceapi.nets.ageGenderNet.loadFromUri('reconocimiento/models/age_gender_model-weights_manifest.json'),
+     faceapi.nets.ssdMobilenetv1.loadFromUri('reconocimiento/models/ssd_mobilenetv1_model-weights_manifest.json'),
+     
 ]).then(cargarCamera)
 
 // Evento que se dispara cuando el video comienza a reproducirse
