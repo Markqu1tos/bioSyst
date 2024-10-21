@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="reconocimiento/face-api.min.js" defer></script>
-    <script src="reconocimiento/webcam.js" defer></script>
-    <link rel="stylesheet" href="reconocimiento/camara.css">
     <title>Registro</title>
 </head>
 <body>
@@ -25,8 +22,25 @@
     </header>
     <!--Algo tengo que agregar-->
     <main>
-        <video id="video" autoplay muted width="640" height="480"></video>
+        <h2 class="tit-registro">Registro</h2>
+    <form action="base.php" method="post">
+        <div class="nom-pass-mail"> 
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <input type="submit" value="Registrar">
+        </div>
+    </form>
+    <div id="video-container">
+        <video id="video" autoplay muted width="400" height="400"></video>
         <canvas id="overlay"></canvas>
+    </div>
     </main>
 
     <footer id="footer">
@@ -52,5 +66,7 @@
        <p>© 2024 BioSyst.</p>
    </div>
 </footer>
+<script defer src="reconocimiento/face-api.min.js"></script>
+    <script defer src="reconocimiento/webcam.js"></script>
 </body>
 </html>

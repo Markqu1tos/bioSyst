@@ -144,6 +144,22 @@ main {
     flex: 1;    
 }
 
+.tit-registro{
+    font-size: 60px;
+    padding-top: 80px;
+    display: flex;
+    justify-content: center;
+}
+
+.nom-pass-mail{
+    padding-top: 40px ;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 400px;
+    align-items: center;
+}
+
 .tit-servicios{
     color: rgb(201, 201, 201);
     font-size: 70px;
@@ -152,7 +168,7 @@ main {
     padding-top: 30px;
 }
 
-.colum-tit{
+#colum-tit{
     background-color:rgb(26, 25, 25);
 }
 
@@ -161,6 +177,7 @@ main {
     justify-content: space-around;
     margin-top: 20px;
     flex-wrap: nowrap;
+    margin-bottom: 80px;
 }
 
 .columnas-a{

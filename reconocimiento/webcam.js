@@ -1,10 +1,32 @@
-// Obtener el elemento de video
-const video = document.getElementById('video')
+// Obtener el elemento de video y canvas
+const video = document.getElementById('video');
+const canvas = document.getElementById('overlay');
 
 // Función para iniciar la cámara
 const cargarCamera = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({video: {}});
-    video.srcObject = stream;
+    try {
+        const constraints = {
+            video: {
+                width: { ideal: 720 }, // Ancho ideal
+                height: { ideal: 480 }, // Alto ideal
+                facingMode: 'user' // 'user' para la cámara frontal
+            }
+        };
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        console.log("Stream obtenido:", stream);
+        video.srcObject = stream;
+        return new Promise((resolve) => {
+            video.onloadedmetadata = () => {
+                video.play();
+                // Ajustar el tamaño del canvas al video
+                canvas.width = video.videoWidth; // Establecer el ancho del canvas
+                canvas.height = video.videoHeight; // Establecer la altura del canvas
+                resolve();
+            };
+        });
+    } catch (err) {
+        console.error("Error al acceder a la cámara: ", err);
+    }
 };
 
 // Compatibilidad con navegadores antiguos
@@ -15,73 +37,78 @@ navigator.getMedia =
 
 // Cargar modelos de face-api.js
 Promise.all([
-     faceapi.nets.tinyFaceDetector.loadFromUri('reconocimiento/models/tiny_face_detector_model-weights_manifest.json'),
-     faceapi.nets.faceLandmark68Net.loadFromUri('reconocimiento/models/face_landmark_68_model-weights_manifest.json'),
-     faceapi.nets.faceRecognitionNet.loadFromUri('reconocimiento/models/face_recognition_model-weights_manifest.json'),
-     faceapi.nets.faceExpressionNet.loadFromUri('reconocimiento/models/face_expression_model-weights_manifest.json'),
-     faceapi.nets.ageGenderNet.loadFromUri('reconocimiento/models/age_gender_model-weights_manifest.json'),
-     faceapi.nets.ssdMobilenetv1.loadFromUri('reconocimiento/models/ssd_mobilenetv1_model-weights_manifest.json'),
-     
-]).then(cargarCamera)
+    faceapi.nets.tinyFaceDetector.loadFromUri('reconocimiento/models'),
+    faceapi.nets.faceLandmark68Net.loadFromUri('reconocimiento/models'),
+    faceapi.nets.faceRecognitionNet.loadFromUri('reconocimiento/models'),
+    faceapi.nets.faceExpressionNet.loadFromUri('reconocimiento/models'),
+    faceapi.nets.ageGenderNet.loadFromUri('reconocimiento/models'),
+    faceapi.nets.ssdMobilenetv1.loadFromUri('reconocimiento/models'),
+]).then(() => {
+    console.log("Modelos cargados correctamente");
+    return cargarCamera();
+})
+.then(() => {
+    console.log("Cámara iniciada correctamente");
+})
+.catch(err => {
+    console.error("Error al cargar modelos o iniciar cámara: ", err);
+});
+
+// Variables para controlar la frecuencia de capturas
+let lastCaptureTime = 0;
+const captureInterval = 10000; // 10 segundos entre capturas
 
 // Evento que se dispara cuando el video comienza a reproducirse
 video.addEventListener('play', async () => {
   // Crear canvas para dibujar detecciones
-  const canvas = faceapi.createCanvasFromMedia(document.getElementById('video'))
-  document.body.append(canvas);
+  const canvas = faceapi.createCanvasFromMedia(video)
+  document.getElementById('video-container').append(canvas);
 
   // Ajustar dimensiones del canvas al video
-  const displaySize = {width: video.width, height: video.height}
+  const displaySize = {width: video.videoWidth, height: video.videoHeight}
   faceapi.matchDimensions(canvas, displaySize)
 
-  // Variables para controlar la frecuencia de capturas
-  let lastCaptureTime = 0;
-  const captureInterval = 10000; // 10 segundos entre capturas
-
   // Bucle principal de detección
-  setInterval(async() => {
-    // Detectar rostros y sus características
-    const detections = await faceapi.detectAllFaces(video, new faceapi.SsdMobilenetv1Options())
-        .withFaceLandmarks()
-        .withFaceExpressions()
-        .withAgeAndGender()
-        .withFaceDescriptors()
+  async function detectFaces() {
+    const detections = await faceapi.detectAllFaces(video, new faceapi.SsdMobilenetv1Options({ minConfidence: 0.5 })) // Ajustar la confianza mínima
+      .withFaceLandmarks()
+      .withFaceExpressions()
+      .withAgeAndGender()
+      .withFaceDescriptors()
 
-    // Ajustar detecciones al tamaño del canvas
+    console.log(detections);
+
     const resizedDetections = faceapi.resizeResults(detections, displaySize)
-    const ctx = canvas.getContext('2d')
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
     
-    // Dibujar detecciones y expresiones en el canvas
-    faceapi.draw.drawDetections(canvas, resizedDetections)
-    faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
     
-    // Procesar cada detección
-    resizedDetections.forEach(detection => {
-      const { gender, expressions } = detection
-      const bottomRight = {
-        x: detection.detection.box.bottomRight.x,
-        y: detection.detection.box.bottomRight.y + 15 // Ajusta este valor para mover el texto más abajo si es necesario
-      }
+    if (resizedDetections.length > 0) {
+      const detection = resizedDetections[0]; // Tomar solo la primera detección
+      faceapi.draw.drawDetections(canvas, [detection]);
+      faceapi.draw.drawFaceLandmarks(canvas, [detection]);
+      faceapi.draw.drawFaceExpressions(canvas, [detection]);
+
+      const { age, gender, expressions } = detection;
       new faceapi.draw.DrawTextField(
         [
+          `${Math.round(age, 0)} years`,
           `${gender}`
         ],
-        bottomRight
-      ).draw(canvas)
+        detection.detection.box.bottomRight
+      ).draw(canvas);
 
       // Verificar si hay una sonrisa y capturar la imagen
       if (expressions.happy > 0.8 && Date.now() - lastCaptureTime > captureInterval) {
         captureImage();
         lastCaptureTime = Date.now();
       }
+  }
 
-    })
+  requestAnimationFrame(detectFaces)
+}
 
-  }, 20)
-
+detectFaces()
 })
-
 // Cargar el contador de capturas y los archivos existentes desde localStorage
 let captureCounter = parseInt(localStorage.getItem('captureCounter')) || 0;
 const existingFiles = new Set(JSON.parse(localStorage.getItem('existingFiles')) || []);
@@ -90,8 +117,7 @@ const existingFiles = new Set(JSON.parse(localStorage.getItem('existingFiles')) 
 let hasCaptured = false;
 
 // Tiempo de espera para permitir una nueva captura (en milisegundos)
-const captureCooldown = 10000; // 9 segundos
-
+const captureCooldown = 10000; // 10 segundos
 
 // Función para capturar y descargar la imagen del video
 function captureImage() {
@@ -149,44 +175,12 @@ function fileExists(fileName) {
   return existingFiles.has(fileName); // Verificar si el nombre de archivo ya existe
 }
 
-// Bucle principal de detección
-setInterval(async () => {
-  // Detectar rostros y sus características
-  const detections = await faceapi.detectAllFaces(video, new faceapi.SsdMobilenetv1Options())
-      .withFaceLandmarks()
-      .withFaceExpressions()
-      .withAgeAndGender()
-      .withFaceDescriptors();
-
-
-      const displaySize = {width: video.width, height: video.height}
-      const canvas = faceapi.createCanvasFromMedia(document.getElementById('video'))
-
-  // Ajustar detecciones al tamaño del canvas
-  const resizedDetections = faceapi.resizeResults(detections, displaySize);
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-  // Dibujar detecciones y expresiones en el canvas
-  faceapi.draw.drawDetections(canvas, resizedDetections);
-  faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
-  
-  // Procesar cada detección
-  resizedDetections.forEach(detection => {
-    const { expressions } = detection;
-
-    // Verificar si hay una sonrisa y capturar la imagen
-    if (expressions.happy > 0.8) {
-      captureImage(); // Llamar a la función de captura
-    }
-  });
-
-
-},
-);
-
 video.addEventListener('loadedmetadata', () => {
   const displaySize = { width: video.videoWidth, height: video.videoHeight };
-  // Aquí puedes iniciar tu lógica de detección
+  // Aquí puedes iniciar tu lógica de detección si es necesario
 });
 
+// Borrar el registro del localStorage
+localStorage.removeItem('captureCounter'); // Eliminar el contador de capturas
+localStorage.removeItem('existingFiles'); // Eliminar los archivos existentes
+console.log("Registro del localStorage borrado.");
