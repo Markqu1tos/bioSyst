@@ -18,6 +18,7 @@
                 <li><a href="bioSyst.html">Acerca de BioSyst</a></li>
                 <li><a href="#tit">Servicios</a></li>
                 <li><a href="#footer">Contacto</a></li>
+                <li><a href="iniciosesion.html">Login</a></li>
             </ul>
         </nav>
     </header>
@@ -67,8 +68,8 @@
         <section id="login">
             <h1 class="log-tit">Regístrese ahora para obtener más información sobre nuestro software</h1>
             <div class="tit-log">
-                <a href="registro.html"><p class="reg">Registrarte</p></a>
-                <p class="log"><a href="iniciosesion.html">Inicia Sesion</a></p>
+                    <a href="registro.html"><p  class="reg">Registrarte</p></a>
+                    <a href="iniciosesion.html"><p class="log">Login</p></a>
             </div>        
         </section>
         <!--
@@ -105,7 +106,7 @@
 
     <!--Arreglar el slider porque quedo re tilin, principalmente que no se mueve solo, me falto agregar el moveslide-->
     <script>
-        let currentSlide = 0;
+        let slideAhora = 0;
         const slides = document.querySelectorAll('.slide');
 
         function showSlide(index) {
@@ -115,10 +116,14 @@
         }
 
         function moveSlide(direction) {
-            currentSlide = (currentSlide + direction + slides.length) % slides.length;
-            showSlide(currentSlide);
+            slideAhora = (slideAhora + direction + slides.length) % slides.length;
+            showSlide(slideAhora);
         }
-        showSlide(currentSlide);
+        setInterval (() =>{
+            moveSlide(1);
+        },4000);
+
+        showSlide(slideAhora);
     </script>
 </body>
 </html>
