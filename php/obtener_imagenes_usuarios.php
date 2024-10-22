@@ -1,26 +1,22 @@
 <?php
-include_once 'Database.php';
-include_once 'User.php';
+require_once '../includes/Database.php';
 
 header('Content-Type: application/json');
 
 $database = new Database();
-$db = $database->getConnection();
+$conn = $database->getConnection();
 
-$user = new User($db);
-$result = $user->getAllUsers();
+$query = "SELECT username, facial_image_path FROM users";
+$result = $conn->query($query);
 
-if($result->num_rows > 0) {
-    $users_arr = array();
-    while ($row = $result->fetch_assoc()) {
-        $user_item = array(
-            "id" => $row['id'],
-            "username" => $row['username'],
-            "imagen_facial" => $row['facial_image_path']
-        );
-        array_push($users_arr, $user_item);
+$usuarios = [];
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $usuarios[] = [
+            'username' => $row['username'],
+            'facial_image_path' => $row['facial_image_path']
+        ];
     }
-    echo json_encode($users_arr);
-} else {
-    echo json_encode(array("message" => "No se encontraron usuarios."));
 }
+
+echo json_encode($usuarios);

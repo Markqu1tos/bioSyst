@@ -22,20 +22,21 @@
     </header>
     <main>
         <h2 class="in-ses">Inicio de Sesion</h2>
-        <form action="base.php" method="post"></form>
-        <div class="nom-pass-mail"> 
-            <label for="nombre" >Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>   
-            <label for="password" class="nombr">Contraseña:</label>
-            <input type="password" id="password" name="password" required>
-            <div class="nombr">
-                <input type="submit" value="iniciar Sesion">
-            </div>
+        <form action="php/registro.php" method="post" enctype="multipart/form-data">
+            <div class="nom-pass-mail"> 
+                <label for="nombre" >Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>   
+                <label for="password" class="nombr">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+                <div class="nombr">
+                    <input type="submit" value="iniciar Sesion">
+                </div>
             </div>
             <div class="cuenta-sesion">
                 <p>¿No tenes cuenta?</p>
                 <a href="registro.html">Registrate</a>
             </div>
+        </form>
     </main>
     <footer id="footer">
         <div class="columnas-footer">
