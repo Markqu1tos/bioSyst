@@ -11,7 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user->email = $_POST['email'];
     $user->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // Manejo de la imagen facial
     $target_dir = "../uploads/";
     $target_file = $target_dir . basename($_FILES["facial_image"]["name"]);
     if (move_uploaded_file($_FILES["facial_image"]["tmp_name"], $target_file)) {
