@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - BioSyst</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
 </head>
 <body>
     <form action="php/login.php" method="post">
@@ -14,5 +15,17 @@
         <button type="submit">Iniciar Sesión</button>
     </form>
     <p>¿No tienes una cuenta? <a href="registro.html">Regístrate aquí</a></p>
+    <script>
+        // Cargar los modelos de face-api.js
+        Promise.all([
+            faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+            faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+            faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
+        ]).then(startFaceRecognition);
+
+        function startFaceRecognition() {
+            // Aquí irá el código para iniciar el reconocimiento facial
+        }
+    </script>
 </body>
 </html>
