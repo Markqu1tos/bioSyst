@@ -338,3 +338,71 @@ footer {
         margin: 10px 0;
     }
 }
+
+.registro-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.registro-form, .reconocimiento-facial {
+    width: 48%;
+}
+
+#videoContainer {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+#video, #canvas {
+    width: 100%;
+    height: auto;
+}
+
+#canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="submit"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-group input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.form-group input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+button {
+    padding: 10px 15px;
+    margin-right: 10px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #007B9A;
+}

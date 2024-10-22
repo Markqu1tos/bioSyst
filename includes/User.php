@@ -14,9 +14,9 @@ class User {
     }
 
     public function create() {
-        $query = "INSERT INTO " . $this->table_name . " (username, email, password, facial_image_path) VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO " . $this->table_name . " (username, password, facial_image_path) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("ssss", $this->username, $this->email, $this->password, $this->facial_image_path);
+        $stmt->bind_param("sss", $this->username, $this->password, $this->facial_image_path);
         return $stmt->execute();
     }
 

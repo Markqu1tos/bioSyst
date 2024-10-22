@@ -1,7 +1,7 @@
 <?php
 class Database {
     private $host = "localhost";
-    private $db_name = "biosyst";
+    private $db_name = "bioSyst";
     private $username = "tu_usuario";
     private $password = "tu_contraseña";
     public $conn;
@@ -9,11 +9,9 @@ class Database {
     public function getConnection() {
         $this->conn = null;
         try {
-            $this->conn = new mysqli($this->host, $this->username, $this->password, $this->db_name);
-            if ($this->conn->connect_error) {
-                throw new Exception("Error de conexión: " . $this->conn->connect_error);
-            }
-        } catch(Exception $exception) {
+            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+            $this->conn->exec("set names utf8");
+        } catch(PDOException $exception) {
             echo "Error de conexión: " . $exception->getMessage();
         }
         return $this->conn;

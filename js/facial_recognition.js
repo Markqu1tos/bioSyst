@@ -6,50 +6,53 @@ let faceMatcher = null;
 async function iniciarReconocimientoFacial() {
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
-    const resultadoDiv = document.getElementById('resultado');
     const displaySize = { width: video.width, height: video.height };
 
-    // Cargar modelos de face-api
-    await Promise.all([
-        faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
-        faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-        faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
-    ]);
-
-    // Cargar imágenes etiquetadas
-    faceMatcher = await cargarImagenesEtiquetadas();
-
-    // Iniciar la cámara
-    navigator.mediaDevices.getUserMedia({ video: {} })
-        .then(stream => video.srcObject = stream)
-        .catch(err => console.error('Error al acceder a la cámara:', err));
+    const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+    video.srcObject = stream;
 
     video.addEventListener('play', () => {
-        const canvas = faceapi.createCanvasFromMedia(video);
-        document.body.append(canvas);
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
         faceapi.matchDimensions(canvas, displaySize);
 
         setInterval(async () => {
-            const detections = await faceapi.detectAllFaces(video).withFaceLandmarks().withFaceDescriptors();
+            const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+                .withFaceLandmarks()
+                .withFaceExpressions();
             const resizedDetections = faceapi.resizeResults(detections, displaySize);
-            
             canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-            
-            const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor));
-            results.forEach((result, i) => {
-                const box = resizedDetections[i].detection.box;
-                const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() });
-                drawBox.draw(canvas);
-            });
-
-            if (results.length > 0 && results[0].label !== 'unknown') {
-                resultadoDiv.innerText = `Usuario reconocido: ${results[0].label}`;
-                // Aquí puedes agregar lógica para iniciar sesión automáticamente
-            } else {
-                resultadoDiv.innerText = 'Usuario no reconocido';
-            }
+            faceapi.draw.drawDetections(canvas, resizedDetections);
+            faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
+            faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
         }, 100);
     });
+}
+
+async function cargarModelos() {
+    await faceapi.nets.tinyFaceDetector.loadFromUri('/reconocimiento/models');
+    await faceapi.nets.faceLandmark68Net.loadFromUri('/reconocimiento/models');
+    await faceapi.nets.faceRecognitionNet.loadFromUri('/reconocimiento/models');
+    await faceapi.nets.faceExpressionNet.loadFromUri('/reconocimiento/models');
+}
+
+async function reconocerRostros() {
+    const video = document.getElementById('video');
+    const canvas = faceapi.createCanvasFromMedia(video);
+    document.body.append(canvas);
+    const displaySize = { width: video.width, height: video.height };
+    faceapi.matchDimensions(canvas, displaySize);
+
+    setInterval(async () => {
+        const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+            .withFaceLandmarks()
+            .withFaceExpressions();
+        const resizedDetections = faceapi.resizeResults(detections, displaySize);
+        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        faceapi.draw.drawDetections(canvas, resizedDetections);
+        faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
+        faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
+    }, 100);
 }
 
 async function cargarImagenesEtiquetadas() {
@@ -71,4 +74,40 @@ async function cargarImagenesEtiquetadas() {
     return new faceapi.FaceMatcher(labeledFaceDescriptors.filter(descriptor => descriptor !== null));
 }
 
+async function capturarImagenFacial() {
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+
+    // Capturar la imagen del video
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+    // Convertir la imagen a base64 y guardarla en el input oculto
+    const imageDataUrl = canvas.toDataURL('image/jpeg');
+    document.getElementById('facial_image').value = imageDataUrl;
+
+    alert('Imagen facial capturada con éxito');
+}
+
+async function iniciarCamara() {
+    const video = document.getElementById('video');
+    const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+    video.srcObject = stream;
+}
+
+function capturarImagen() {
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    document.getElementById('facial_image').value = canvas.toDataURL('image/jpeg');
+    alert('Imagen capturada');
+}
+
 document.addEventListener('DOMContentLoaded', iniciarReconocimientoFacial);
+
+document.getElementById('registroForm').onsubmit = function(e) {
+    if (!document.getElementById('facial_image').value) {
+        e.preventDefault();
+        alert('Por favor, capture una imagen facial antes de registrarse.');
+    }
+};

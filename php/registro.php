@@ -1,26 +1,24 @@
 <?php
 require_once '../includes/Database.php';
-require_once '../includes/User.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $database = new Database();
     $db = $database->getConnection();
-    $user = new User($db);
 
-    $user->username = $_POST['username'];
-    $user->email = $_POST['email'];
-    $user->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $username = $_POST['nombre'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $facial_image_data = $_POST['facial_image'];
+    $facial_image = base64_decode(explode(',', $facial_image_data)[1]);
+    $facial_image_path = "../uploads/" . uniqid() . '.jpg';
+    file_put_contents($facial_image_path, $facial_image);
 
-    $target_dir = "../uploads/";
-    $target_file = $target_dir . basename($_FILES["facial_image"]["name"]);
-    if (move_uploaded_file($_FILES["facial_image"]["tmp_name"], $target_file)) {
-        $user->facial_image_path = $target_file;
-    } else {
-        echo "Error al subir la imagen.";
-        exit();
-    }
+    $query = "INSERT INTO users (username, password, facial_image_path) VALUES (?, ?, ?)";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(1, $username);
+    $stmt->bindParam(2, $password);
+    $stmt->bindParam(3, $facial_image_path);
 
-    if ($user->create()) {
+    if ($stmt->execute()) {
         echo "Usuario registrado con éxito";
     } else {
         echo "Error al registrar el usuario";
