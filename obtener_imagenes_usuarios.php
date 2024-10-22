@@ -8,17 +8,15 @@ $database = new Database();
 $db = $database->getConnection();
 
 $user = new User($db);
-$stmt = $user->getAllUsers();
-$num = $stmt->rowCount();
+$result = $user->getAllUsers();
 
-if($num > 0) {
+if($result->num_rows > 0) {
     $users_arr = array();
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        extract($row);
+    while ($row = $result->fetch_assoc()) {
         $user_item = array(
-            "id" => $id,
-            "username" => $username,
-            "imagen_facial" => $facial_image_path
+            "id" => $row['id'],
+            "username" => $row['username'],
+            "imagen_facial" => $row['facial_image_path']
         );
         array_push($users_arr, $user_item);
     }

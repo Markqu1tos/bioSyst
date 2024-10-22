@@ -15,7 +15,8 @@ class User {
 
     public function create() {
         $query = "INSERT INTO " . $this->table_name . " 
-                  SET username=:username, email=:email, password=:password, facial_image_path=:facial_image_path";
+                  (username, email, password, facial_image_path) 
+                  VALUES (?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -24,10 +25,7 @@ class User {
         $this->password = htmlspecialchars(strip_tags($this->password));
         $this->facial_image_path = htmlspecialchars(strip_tags($this->facial_image_path));
 
-        $stmt->bindParam(":username", $this->username);
-        $stmt->bindParam(":email", $this->email);
-        $stmt->bindParam(":password", $this->password);
-        $stmt->bindParam(":facial_image_path", $this->facial_image_path);
+        $stmt->bind_param("ssss", $this->username, $this->email, $this->password, $this->facial_image_path);
 
         if($stmt->execute()) {
             return true;
@@ -36,13 +34,13 @@ class User {
     }
 
     public function emailExists() {
-        $query = "SELECT id, username, password FROM " . $this->table_name . " WHERE email = ? LIMIT 0,1";
+        $query = "SELECT id, username, password FROM " . $this->table_name . " WHERE email = ? LIMIT 1";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->email);
+        $stmt->bind_param("s", $this->email);
         $stmt->execute();
-        $num = $stmt->rowCount();
-        if($num > 0) {
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->get_result();
+        if($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
             $this->id = $row['id'];
             $this->username = $row['username'];
             $this->password = $row['password'];
@@ -53,8 +51,7 @@ class User {
 
     public function getAllUsers() {
         $query = "SELECT id, username, facial_image_path FROM " . $this->table_name;
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt;
+        $result = $this->conn->query($query);
+        return $result;
     }
 }
