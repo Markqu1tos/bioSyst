@@ -1,24 +1,66 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de Sesión con Reconocimiento Facial</title>
-    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
-    <script src="facial_recognition.js"></script>
+    <title>inicio de Sesion</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Inicio de Sesión con Reconocimiento Facial</h1>
-    <video id="video" width="640" height="480" autoplay muted></video>
-    <canvas id="canvas" width="640" height="480"></canvas>
-    <div id="resultado"></div>
+    <header>
+        <div id="Titulo">
 
-    <form action="php/login.php" method="post">
-        <h2>Iniciar Sesión</h2>
-        <input type="text" name="usuario" placeholder="Usuario" required>
-        <input type="password" name="password" placeholder="Contraseña" required>
-        <button type="submit">Iniciar Sesión</button>
-    </form>
-    <p>¿No tienes una cuenta? <a href="registro.html">Regístrate aquí</a></p>
+            <h1><a href="index.html">BioSyst</a></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#about">Acerca de BioSyst</a></li>
+                <li><a href="#tit">Servicios</a></li>
+                <li><a href="#footer">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2 class="in-ses">Inicio de Sesion</h2>
+        <form action="base.php" method="post"></form>
+        <div class="caja-log-reg">
+        <div class="nom-pass-mail"> 
+            <label for="nombre" >Usuario:</label>
+            <input type="text" id="nombre" name="nombre" required>   
+            <label for="password" class="nombr">Contraseña:</label>
+            <input type="password" id="password" name="password" required>
+            <div class="nombr">
+                <input type="submit" value="iniciar Sesion">
+            </div>
+            </div>
+            <div class="cuenta-sesion">
+                <p>¿No tenes cuenta?</p>
+                <a href="registro.html">Registrate</a>
+            </div>
+        </div>
+    </main>
+    <footer id="footer">
+        <div class="columnas-footer">
+       <div class="contac">
+           <h3><u>Contacto</u></h3>
+           <p>info@biosyst.com</p>
+           <p>+54 11 999-999</p>
+       </div>
+       <div class="contac">
+           <h3><u>Redes Sociales</u></h3>
+           <p><a href="#">Instagram</a></p>
+           <p><a href="#">Twitter</a></p>
+           <p><a href="#">LinkedIn</a></p>
+       </div>
+       <div class="contac">
+           <h3>¿Queres trabajar con nosotros?</h3>
+           <p>Envía tu CV a nuestro correo:</p>
+           <p><a href="#">LinkedIn</a></p>
+       </div>
+   </div>
+   <div class="derechos">
+       <p>© 2024 BioSyst.</p>
+   </div>
+</footer>
 </body>
 </html>

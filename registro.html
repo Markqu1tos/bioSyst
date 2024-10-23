@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - BioSyst</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Registro</title>
 </head>
 <body>
     <header>
         <div id="Titulo">
+
             <h1><a href="index.html">BioSyst</a></h1>
         </div>
         <nav>
@@ -19,55 +20,60 @@
             </ul>
         </nav>
     </header>
-    <main class="registro-container">
-        <div class="registro-form">
-            <h2>Registro</h2>
-            <form id="registroForm" action="php/registro.php" method="post" enctype="multipart/form-data">
-                <div class="nom-pass-mail"> 
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" required>   
-                    <label for="password" class="nombr">Contraseña:</label>
-                    <input type="password" id="password" name="password" required>
-                    <input type="hidden" id="facial_image" name="facial_image">
-                    <div class="nombr">
-                        <input type="submit" value="Registrarse">
-                    </div>
-                </div>
-            </form>
+    <!--Algo tengo que agregar-->
+    <main>
+        <h2 class="tit-registro">Registro</h2>
+    <form action="base.php" method="post">
+        <div class="nom-pass-mail"> 
+        <label for="nombre" >Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        
+        <label for="email" class="nombr">Email:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="password" class="nombr">Contraseña:</label>
+        <input type="password" id="password" name="password" required>
+        <div class="nombr">
+            <input type="submit" value="Registrar">
         </div>
-        <div class="reconocimiento-facial">
-            <h2>Reconocimiento Facial</h2>
-            <div id="videoContainer">
-                <video id="video" width="640" height="480" autoplay muted></video>
-                <canvas id="canvas" style="display:none;"></canvas>
-            </div>
-            <button onclick="iniciarCamara()">Iniciar cámara</button>
-            <button onclick="capturarImagen()">Capturar imagen</button>
         </div>
+    </form>
+  
+
+
+
+
+    
+    <div class="cuenta-sesion">
+        <p>¿Tenes cuenta?</p>
+        <a href="iniciosesion.html">Inicia Sesion</a>
+    </div>
     </main>
+
     <footer id="footer">
         <div class="columnas-footer">
-            <div class="contac">
-                <h3><u>Contacto</u></h3>
-                <p>info@biosyst.com</p>
-                <p>+54 11 999-999</p>
-            </div>
-            <div class="contac">
-                <h3><u>Redes Sociales</u></h3>
-                <p><a href="#">Instagram</a></p>
-                <p><a href="#">Twitter</a></p>
-                <p><a href="#">LinkedIn</a></p>
-            </div>
-            <div class="contac">
-                <h3>¿Queres trabajar con nosotros?</h3>
-                <p>Envía tu CV a nuestro correo:</p>
-                <p><a href="#">LinkedIn</a></p>
-            </div>
-        </div>
-        <div class="derechos">
-            <p>© 2024 BioSyst.</p>
-        </div>
-    </footer>
-    <script src="js/facial_recognition.js"></script>
+       <div class="contac">
+           <h3><u>Contacto</u></h3>
+           <p>info@biosyst.com</p>
+           <p>+54 11 999-999</p>
+       </div>
+       <div class="contac">
+           <h3><u>Redes Sociales</u></h3>
+           <p><a href="#">Instagram</a></p>
+           <p><a href="#">Twitter</a></p>
+           <p><a href="#">LinkedIn</a></p>
+       </div>
+       <div class="contac">
+           <h3>¿Queres trabajar con nosotros?</h3>
+           <p>Envía tu CV a nuestro correo:</p>
+           <p><a href="#">LinkedIn</a></p>
+       </div>
+   </div>
+   <div class="derechos">
+       <p>© 2024 BioSyst.</p>
+   </div>
+</footer>
+<script defer src="reconocimiento/face-api.min.js"></script>
+    <script defer src="reconocimiento/webcam.js"></script>
 </body>
 </html>

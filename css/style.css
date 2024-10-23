@@ -13,7 +13,7 @@ body {
 }
 
 header {
-    flex-wrap: wrap;
+    justify-content: space-between;
     padding: 20px;
     background-color: rgba(35, 34, 39);
     display: flex;
@@ -59,7 +59,7 @@ nav a {
 
 /*cambiar el color del hover por 183, 0, 255 que es el mismo del del otro hover del footer*/
 nav a:hover {
-    color: rgb(236, 209, 252);
+    color: rgb(183, 0, 255);
 }
 
 #tit { 
@@ -146,26 +146,53 @@ main {
 
 .in-ses{
     font-size: 60px;
-    padding-top: 110px;
+    padding-top: 50px;
     display: flex;
     justify-content: center;
 }
 
 .tit-registro{
     font-size: 60px;
-    padding-top: 110px;
+    padding-top: 50px;
     display: flex;
     justify-content: center;
 }
  .cuenta-sesion{
-    padding-top: 50px;
+    padding-top: 20px;
     flex-direction: column;
     display: flex;
     justify-content: center;
     width: 100%;
     align-items: center;
+    padding-bottom: 20px
  }
-.nom-pass-mail{
+
+.nombr{
+    padding-top: 20px;
+}
+
+.in-ses {
+    width: 100%;
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #232223;
+}
+
+.caja-log-reg{
+    margin: 100px ;
+    padding-bottom: 30px;
+    border-radius: 40px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 40%;
+}
+
+.caja-log-reg:hover{
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+}
+.nom-pass-mail {
+    flex-direction: column;
     padding-top: 40px ;
     display: flex;
     justify-content: center;
@@ -174,8 +201,38 @@ main {
     align-items: center;
 }
 
-.nombr{
-    padding-top: 20px;
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"], input[type="password"], input[type="email"]{
+    width: 20%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border 0.3s;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    border-color: #000000; 
+    outline: none;
+}
+
+input[type="submit"] {
+    background-color: #080808;
+    color: #fff;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #979797;
 }
 
 .tit-servicios{
@@ -220,6 +277,13 @@ main {
         margin-bottom: 20px;
 }
 
+.reg-uno{
+    padding-right: 90px;
+}
+
+.log-uno{
+    padding-left: 90px;
+}
 .log-tit{
     padding-top: 100px;
     font-size: 50px;
@@ -337,72 +401,4 @@ footer {
     nav ul li {
         margin: 10px 0;
     }
-}
-
-.registro-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-}
-
-.registro-form, .reconocimiento-facial {
-    width: 48%;
-}
-
-#videoContainer {
-    position: relative;
-    margin-bottom: 10px;
-}
-
-#video, #canvas {
-    width: 100%;
-    height: auto;
-}
-
-#canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.form-group input[type="text"],
-.form-group input[type="password"],
-.form-group input[type="submit"] {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.form-group input[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-}
-
-.form-group input[type="submit"]:hover {
-    background-color: #45a049;
-}
-
-button {
-    padding: 10px 15px;
-    margin-right: 10px;
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #007B9A;
 }
